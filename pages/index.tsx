@@ -5,7 +5,6 @@ import {
   Container,
   Button,
   styled,
-  useAutocomplete
 } from '@mui/material';
 import type { ReactElement } from 'react';
 import BaseLayout from 'src/layouts/BaseLayout';
@@ -28,8 +27,6 @@ import {
   outputAtom
 } from '@/store';
 import React, { useEffect } from 'react';
-import { languages } from 'monaco-editor';
-import { InputTwoTone } from '@mui/icons-material';
 import { runCpp } from '@/runner/cpp';
 import { appendScript } from '@/utils';
 import { runPhp } from '@/runner/php';
