@@ -1,10 +1,10 @@
-import { useEffect, useState, type ReactElement, type ReactNode } from 'react';
+import { type ReactElement, type ReactNode } from 'react';
 
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import Router from 'next/router';
-import nProgress, { set } from 'nprogress';
+import nProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import ThemeProvider from 'src/theme/ThemeProvider';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,11 +13,6 @@ import createEmotionCache from 'src/createEmotionCache';
 import { SidebarProvider } from 'src/contexts/SidebarContext';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { useScript } from 'usehooks-ts';
-import { loadPyodide } from 'pyodide';
-import { codeAtom, outputAtom } from '@/store';
-import { useAtom } from 'jotai';
-// import constants from 'constants';
 
 const clientSideEmotionCache = createEmotionCache();
 
