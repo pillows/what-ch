@@ -1,3 +1,4 @@
+'use client'
 import { type ReactElement, type ReactNode } from 'react';
 
 import type { NextPage } from 'next';
@@ -13,6 +14,7 @@ import createEmotionCache from 'src/createEmotionCache';
 import { SidebarProvider } from 'src/contexts/SidebarContext';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { Provider } from 'jotai'
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -23,6 +25,14 @@ type NextPageWithLayout = NextPage & {
 interface TokyoAppProps extends AppProps {
   emotionCache?: EmotionCache;
   Component: NextPageWithLayout;
+}
+
+export const Providers = ({ children }) => {
+  return (
+    <Provider>
+      {children}
+    </Provider>
+  )
 }
 
 function TokyoApp(props: TokyoAppProps) {
@@ -44,10 +54,12 @@ function TokyoApp(props: TokyoAppProps) {
       </Head>
       <SidebarProvider>
         <ThemeProvider>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
-          </LocalizationProvider>
+          <Providers>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <CssBaseline />
+              {getLayout(<Component {...pageProps} />)}
+            </LocalizationProvider>
+          </Providers>
         </ThemeProvider>
       </SidebarProvider>
     </CacheProvider>
