@@ -66,19 +66,19 @@ export interface Language {
 
 // const options = ['Firefox', 'Google Chrome', 'Microsoft Edge', 'Safari', 'Opera'];
 function Overview() {
-  const [output, setOutput] = useAtom<string | null>(outputAtom);
-  const code = useAtomValue<string | null>(codeAtom);
-  const [mode, setMode] = useAtom<Language | null>(modeAtom);
-  const stdIn = useAtomValue<string | null>(inputAtom);
+  const [output, setOutput] = useAtom(outputAtom);
+  const code = useAtomValue(codeAtom);
+  const [mode, setMode] = useAtom(modeAtom);
+  const stdIn = useAtomValue(inputAtom);
   const [compilerReady, setCompilerReady] =
-    useAtom<boolean | null>(cppCompilerReadyAtom);
+    useAtom(cppCompilerReadyAtom);
 
   useEffect(() => {
     setOutput('');
     if (mode.value === 'c_cpp') {
       const url = 'https://cdn.jsdelivr.net/npm/@chriskoch/cpp-wasm';
       appendScript(url, async () => {
-        await globalThis['CPP_READY'];
+        await (globalThis as any)['CPP_READY'];
         // isCompilerReady = true;
         setCompilerReady(true);
       });
