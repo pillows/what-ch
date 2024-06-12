@@ -68,9 +68,6 @@ export interface Language {
 function Overview() {
   const [output, setOutput] = useAtom(outputAtom);
   const code = useAtomValue(codeAtom);
-  const [value, setValue] = React.useState<string | null>(
-    languagesList[0].label
-  );
   const [mode, setMode] = useAtom<Language>(modeAtom);
   const stdIn = useAtomValue(inputAtom);
   const [compilerReady, setCompilerReady] =
@@ -81,7 +78,7 @@ function Overview() {
     if (mode.value === 'c_cpp') {
       const url = 'https://cdn.jsdelivr.net/npm/@chriskoch/cpp-wasm';
       appendScript(url, async () => {
-        const ready = await globalThis['CPP_READY'];
+        await globalThis['CPP_READY'];
         // isCompilerReady = true;
         setCompilerReady(true);
       });
