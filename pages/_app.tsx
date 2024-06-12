@@ -27,7 +27,7 @@ interface TokyoAppProps extends AppProps {
   Component: NextPageWithLayout;
 }
 
-export const Providers = ({ children }) => {
+export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <Provider>
       {children}
