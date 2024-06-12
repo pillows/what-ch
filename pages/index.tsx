@@ -18,7 +18,7 @@ import Hero from 'src/content/Overview/Hero';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { runPython } from '@/runner/python';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import {
   codeAtom,
   cppCompilerReadyAtom,
