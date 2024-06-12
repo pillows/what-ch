@@ -66,12 +66,12 @@ export interface Language {
 
 // const options = ['Firefox', 'Google Chrome', 'Microsoft Edge', 'Safari', 'Opera'];
 function Overview() {
-  const [output, setOutput] = useAtom(outputAtom);
-  const code = useAtomValue(codeAtom);
-  const [mode, setMode] = useAtom<Language>(modeAtom);
-  const stdIn = useAtomValue(inputAtom);
+  const [output, setOutput] = useAtom<string | null>(outputAtom);
+  const code = useAtomValue<string | null>(codeAtom);
+  const [mode, setMode] = useAtom<Language | null>(modeAtom);
+  const stdIn = useAtomValue<string | null>(inputAtom);
   const [compilerReady, setCompilerReady] =
-    useAtom<boolean>(cppCompilerReadyAtom);
+    useAtom<boolean | null>(cppCompilerReadyAtom);
 
   useEffect(() => {
     setOutput('');
@@ -96,7 +96,6 @@ function Overview() {
             <Autocomplete
               disablePortal
               defaultValue={languagesList[0].label}
-              // isOptionEqualToValue={(option, selectedValue) => option.value === selectedValue.value}  // <- you also need to add this code
               isOptionEqualToValue={(option, value) => {
                 // please stop the warning ugghhh
                 return true;

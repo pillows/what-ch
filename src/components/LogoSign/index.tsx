@@ -99,7 +99,7 @@ function Logo() {
 
   return (
     <TooltipWrapper
-      title="Tokyo Free Black Next.js Typescript Admin Dashboard"
+      title="wasm.ch"
       arrow
     >
       <LogoWrapper href="/" sx={{ width: 150, fontSize: 20 }}>

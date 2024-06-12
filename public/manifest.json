@@ -3,8 +3,8 @@
   "background_color": "#f2f5f9",
   "display": "standalone",
   "start_url": ".",
-  "short_name": "Tokyo",
-  "name": "Tokyo Free Black NextJS Typescript Admin Dashboard",
+  "short_name": "wasm-ch",
+  "name": "Wasm.ch is a playground for WebAssembly, PHP, QuickJS, and other languages. It allows you to run code in the browser and see the output in real-time.",
   "icons": [
     {
       "src": "/icon-192x192.png",
