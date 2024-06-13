@@ -19,11 +19,12 @@ print("Hello from Python!")
 `;
 
 export const codeTemplates = {
-  c_cpp: cpp_code,
-  javascript: javascript_code,
-  php: php_code,
-  python: python_code,
-  golang: ''
+  'c++': cpp_code,
+  'c_cpp': cpp_code,
+  'javascript': javascript_code,
+  'php': php_code,
+  'python': python_code,
+  'golang': ''
 };
 
 export const unavailable = ['golang'];

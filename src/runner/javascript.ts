@@ -2,9 +2,7 @@ import { getQuickJS } from 'quickjs-emscripten';
 
 export const runJavascript = async (
   code: string,
-  output: string,
-  inputs: string[],
-  setOutput: never
+  setOutput: (output: string) => void
 ) => {
   setOutput('');
 
@@ -13,7 +11,8 @@ export const runJavascript = async (
 
   const logHandle = vm.newFunction('log', (...args) => {
     const nativeArgs = args.map(vm.dump);
-    setOutput((prev) => prev + nativeArgs.join(' ') + '\n');
+    const output = nativeArgs.join(' ') + '\n';
+    setOutput(output);
   });
   const consoleHandle = vm.newObject();
   vm.setProp(consoleHandle, 'log', logHandle);

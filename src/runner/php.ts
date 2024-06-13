@@ -1,18 +1,18 @@
-import { PhpWeb as PHP } from 'php-wasm/PhpWeb';
+import { PhpWeb } from 'php-wasm/PhpWeb';
 
 export const runPhp = async (
   code: string,
-  output: string,
-  inputs: string[],
-  setOutput: never
+  setOutput: (output: string) => void
 ) => {
-  const php = new PHP();
+  const php = new PhpWeb();
 
   php.addEventListener('ready', async () => {
     await php.run(code);
   });
 
-  php.addEventListener('output', (event) => {
-    setOutput(event.detail[0]);
+  php.addEventListener('output', (event?: { detail: string[]; }) => {
+    if (event) {
+      setOutput(event.detail[0]);
+    }
   });
 };

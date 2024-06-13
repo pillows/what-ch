@@ -66,7 +66,7 @@ export interface Language {
 
 // const options = ['Firefox', 'Google Chrome', 'Microsoft Edge', 'Safari', 'Opera'];
 function Overview() {
-  const [output, setOutput] = useAtom(outputAtom);
+  const [, setOutput] = useAtom(outputAtom);
   const code = useAtomValue(codeAtom);
   const [mode, setMode] = useAtom(modeAtom);
   const stdIn = useAtomValue(inputAtom);
@@ -95,12 +95,13 @@ function Overview() {
             <Logo />
             <Autocomplete
               disablePortal
-              defaultValue={languagesList[0].label}
+              defaultValue={languagesList[0]}
               isOptionEqualToValue={(option, value) => {
                 // please stop the warning ugghhh
-                return true;
+                return option.label === value.label;
+                // return true;
               }}
-              onInputChange={(event: any, newValue: string | null) => {
+              onInputChange={(_, newValue: string | null) => {
                 const filtered = languagesList.filter((language) => {
                   return language.label === newValue;
                 });
@@ -125,13 +126,13 @@ function Overview() {
                   onClick={() => {
                     const inputs = stdIn.split('\n');
                     if (mode.value === 'python')
-                      runPython(code, output, inputs, setOutput);
+                      runPython(code, inputs, setOutput);
                     else if (mode.value === 'c_cpp' || mode.value === 'c')
-                      runCpp(code, 'N/A', inputs, setOutput);
+                      runCpp(code, setOutput);
                     else if (mode.value === 'php')
-                      runPhp(code, 'N/A', inputs, setOutput);
+                      runPhp(code, setOutput);
                     else if (mode.value === 'javascript')
-                      runJavascript(code, 'N/A', inputs, setOutput);
+                      runJavascript(code, setOutput);
                     else {
                       console.log('not implemented');
                       alert('Not implemented')

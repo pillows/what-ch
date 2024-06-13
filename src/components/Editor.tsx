@@ -14,7 +14,6 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import { useAtom } from 'jotai';
 import { codeAtom, inputAtom, modeAtom, outputAtom } from '@/store';
 import { codeTemplates } from '@/constants';
-import { Language } from 'pages';
 
 type Props = {
   id: string;
@@ -23,27 +22,27 @@ type Props = {
   readOnly?: boolean;
 };
 
-const langObj = {
-  c_cpp: 'c_cpp',
+const langObj: { [key: string]: string } = {
+  'c_cpp': 'c_cpp',
   'c++': 'c_cpp',
-  python: 'python',
-  java: 'java',
-  golang: 'golang',
-  php: 'php',
-  javascript: 'javascript'
+  'python': 'python',
+  'java': 'java',
+  'golang': 'golang',
+  'php': 'php',
+  'javascript': 'javascript'
 };
 
 const Editor: React.FC<Props> = (props) => {
   const { id, size, placeholder, readOnly } = props;
-  const [mode] = useAtom<Language>(modeAtom);
+  const [mode] = useAtom(modeAtom);
 
-  const [code, setCode] = useAtom<string>(codeAtom);
-  const [input, setInput] = useAtom<string>(inputAtom);
-  const [output, setOutput] = useAtom<string>(outputAtom);
+  const [code, setCode] = useAtom(codeAtom);
+  const [input, setInput] = useAtom(inputAtom);
+  const [output, setOutput] = useAtom(outputAtom);
 
   useEffect(() => {
-    const language = langObj[mode?.value];
-    setCode(codeTemplates[language]);
+    const language: string = langObj[mode.value];
+    setCode(codeTemplates[language as keyof typeof codeTemplates]);
   }, [mode]);
 
   const onChange = (newValue: string) => {

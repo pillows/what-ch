@@ -1,9 +1,9 @@
 import { loadPyodide } from 'pyodide';
 
 class StdinHandler {
-  results = null;
+  results: string[] = []; // Update the type of 'results' to 'string[]' and initialize it as an empty array
   idx = 0;
-  constructor(results, options) {
+  constructor(results: string[], options: {}) { // Update the type of 'results' parameter to 'string[]'
     this.results = results;
     this.idx = 0;
     Object.assign(this, options);
@@ -16,12 +16,9 @@ class StdinHandler {
 
 export const runPython = (
   code: string,
-  output: string,
   inputs: string[],
-  setOutput: never
+  setOutput: (output: string) => void
 ) => {
-  // const setOutput = useSetAtom(outputAtom);
-  // globalThis.pyodide.runPython(code);
   setOutput('');
   let stdout = '';
   const PYODIDE_BASE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.26.1/full';
@@ -29,7 +26,7 @@ export const runPython = (
   loadPyodide({
     indexURL: PYODIDE_BASE_URL
   }).then((pyodide) => {
-    globalThis.pyodide = pyodide; // so you can access anywhere in the scope
+    // globalThis.pyodide = pyodide; // so you can access anywhere in the scope
     pyodide.setStdin(new StdinHandler(inputs, {}));
     pyodide.setStdout({
       batched: (text) => {
