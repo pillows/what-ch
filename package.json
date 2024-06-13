@@ -42,7 +42,8 @@
   },
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "next export",
+    "prod": "next export",
     "start": "next start",
     "export": "next export",
     "find:unused": "next-unused",
