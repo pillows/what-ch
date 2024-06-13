@@ -8,6 +8,7 @@
     "url": "https://wasm.ch"
   },
   "private": false,
+  "browser": { "fs": false },
   "dependencies": {
     "@emotion/cache": "11.7.1",
     "@emotion/react": "11.9.0",
@@ -42,7 +43,7 @@
   },
   "scripts": {
     "dev": "next",
-    "build": "next export",
+    "build": "next build",
     "prod": "next export",
     "start": "next start",
     "export": "next export",

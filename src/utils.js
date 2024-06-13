@@ -564,9 +564,9 @@ class API {
   async getModule(name) {
     if (this.moduleCache[name]) return this.moduleCache[name];
     console.log(`Fetching and compiling ${name}`);
-    const module = this.compileStreaming(name);
-    this.moduleCache[name] = module;
-    return module;
+    const varModule = this.compileStreaming(name);
+    this.moduleCache[name] = varModule;
+    return varModule;
   }
 
   async untar(memfs, filename) {
