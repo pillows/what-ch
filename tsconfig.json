@@ -30,6 +30,7 @@
     "noFallthroughCasesInSwitch": true,
     "incremental": true
   },
+  "swcMinify": false,
   "typeRoots": ["**/*.d.ts"],
   "exclude": ["node_modules"],
   "include": ["src", "next-env.d.ts", "**/.d.ts", "**/*.ts", "**/*.tsx", "src/types/**/*"]
