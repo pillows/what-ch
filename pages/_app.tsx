@@ -15,7 +15,7 @@ import { SidebarProvider } from 'src/contexts/SidebarContext';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { Provider } from 'jotai'
-
+import PyodideProvider from '@/providers/pyodide';
 const clientSideEmotionCache = createEmotionCache();
 
 type NextPageWithLayout = NextPage & {
@@ -55,10 +55,12 @@ function TokyoApp(props: TokyoAppProps) {
       <SidebarProvider>
         <ThemeProvider>
           <Providers>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <CssBaseline />
-              {getLayout(<Component {...pageProps} />)}
-            </LocalizationProvider>
+            <PyodideProvider>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <CssBaseline />
+                {getLayout(<Component {...pageProps} />)}
+              </LocalizationProvider>
+              </PyodideProvider>
           </Providers>
         </ThemeProvider>
       </SidebarProvider>

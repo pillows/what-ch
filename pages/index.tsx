@@ -17,12 +17,12 @@ import Hero from 'src/content/Overview/Hero';
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { runPython } from '@/runner/python';
+// import { runPython } from '@/runner/python';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   codeAtom,
   cppCompilerReadyAtom,
-  inputAtom,
+  // inputAtom,
   modeAtom,
   outputAtom
 } from '@/store';
@@ -31,6 +31,7 @@ import { runCpp } from '@/runner/cpp';
 import { appendScript } from '@/utils';
 import { runPhp } from '@/runner/php';
 import { runJavascript } from '@/runner/javascript';
+import { usePyodide } from '@/providers/pyodide';
 
 const HeaderWrapper = styled(Card)(
   ({ theme }) => `
@@ -69,9 +70,10 @@ function Overview() {
   const [, setOutput] = useAtom(outputAtom);
   const code = useAtomValue(codeAtom);
   const [mode, setMode] = useAtom(modeAtom);
-  const stdIn = useAtomValue(inputAtom);
+  // const stdIn = useAtomValue(inputAtom);
   const [compilerReady, setCompilerReady] =
     useAtom(cppCompilerReadyAtom);
+  const { runPython } = usePyodide();
 
   useEffect(() => {
     setOutput('');
@@ -123,10 +125,13 @@ function Overview() {
                 <Button
                   variant="contained"
                   sx={{ ml: 2 }}
-                  onClick={() => {
-                    const inputs = stdIn.split('\n');
-                    if (mode.value === 'python')
-                      runPython(code, inputs, setOutput);
+                  onClick={async () => {
+                    console.time('execute')
+                    // const inputs = stdIn.split('\n');
+                    if (mode.value === 'python') {
+                      const output = await runPython(code);
+                      setOutput(output);
+                    }
                     else if (mode.value === 'c_cpp' || mode.value === 'c')
                       runCpp(code, setOutput);
                     else if (mode.value === 'php')

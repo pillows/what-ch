@@ -1,6 +1,6 @@
 import { loadPyodide } from 'pyodide';
 
-class StdinHandler {
+export class StdinHandler {
   results: string[] = []; // Update the type of 'results' to 'string[]' and initialize it as an empty array
   idx = 0;
   constructor(results: string[], options: {}) { // Update the type of 'results' parameter to 'string[]'
@@ -36,6 +36,26 @@ export const runPython = (
     pyodide.loadPackage([]).then(() => {
       pyodide.runPython(code);
       setOutput(stdout);
+      console.timeEnd('execute');
     });
   });
 };
+
+// import { setOptions } from 'client-side-python-runner';
+
+// setOptions({
+//   output: console.log, // Output from print(...)-functions
+//   error: null, // Throws an exception unless this is set to a function
+//   input: prompt, // How to feed the input(...)-function
+//   pythonVersion: 3, // Preferred version
+//   loadVariablesBeforeRun: true,
+//   storeVariablesAfterRun: true,
+//   onLoading: (engine, isFirst) => {},
+//   onLoaded: (engine, isLast) => {},
+// });
+
+// export const runPython = async (code: string, inputs: string[], setOutput: (output: string) => void): Promise<string> => {
+//   // await loadEngine('pyodide', { version: '0.26.1' }); // Set engine version
+//   // await runCode(`print("printed from pyodide")`);
+//   return '';
+// }
