@@ -22,7 +22,6 @@ import { useAtom, useAtomValue } from 'jotai';
 import {
   codeAtom,
   cppCompilerReadyAtom,
-  // inputAtom,
   modeAtom,
   outputAtom
 } from '@/store';
@@ -65,12 +64,10 @@ export interface Language {
   value: string;
 }
 
-// const options = ['Firefox', 'Google Chrome', 'Microsoft Edge', 'Safari', 'Opera'];
 function Overview() {
   const [, setOutput] = useAtom(outputAtom);
   const code = useAtomValue(codeAtom);
   const [mode, setMode] = useAtom(modeAtom);
-  // const stdIn = useAtomValue(inputAtom);
   const [compilerReady, setCompilerReady] =
     useAtom(cppCompilerReadyAtom);
   const { runPython } = usePyodide();
@@ -86,6 +83,7 @@ function Overview() {
       });
     }
   }, [mode]);
+
   return (
     <OverviewWrapper>
       <Head>
@@ -127,7 +125,6 @@ function Overview() {
                   sx={{ ml: 2 }}
                   onClick={async () => {
                     console.time('execute')
-                    // const inputs = stdIn.split('\n');
                     if (mode.value === 'python') {
                       const output = await runPython(code);
                       setOutput(output);
@@ -144,7 +141,6 @@ function Overview() {
                     }
                   }}
                 >
-                  {/* { compilerReady && mode.value === "c_cpp" ? "Execute" : "Loading" } */}
                   {mode.value === 'c_cpp' && !compilerReady
                     ? 'Loading'
                     : 'Execute'}

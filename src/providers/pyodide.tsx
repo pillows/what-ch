@@ -34,7 +34,7 @@ export interface Pyodide {
 type Value = {
   runPython: (code: string) => Promise<string>,
   pyodideLoading: boolean,
-  plotElementId: string
+  plotElementId: string,
 }
 
 const PyodideContext = createContext<Value | undefined>(undefined)
@@ -78,7 +78,6 @@ export default function PyodideProvider({ children }: PropsWithChildren<{}>) {
     const pythonClient = createPythonClient(pyodide)
     await pythonClient.run({ code: 'import dateutil' })
   }
-
   const value: Value = {
     runPython,
     pyodideLoading: loading,

@@ -26,7 +26,6 @@ export const runPython = (
   loadPyodide({
     indexURL: PYODIDE_BASE_URL
   }).then((pyodide) => {
-    // globalThis.pyodide = pyodide; // so you can access anywhere in the scope
     pyodide.setStdin(new StdinHandler(inputs, {}));
     pyodide.setStdout({
       batched: (text) => {
@@ -40,22 +39,3 @@ export const runPython = (
     });
   });
 };
-
-// import { setOptions } from 'client-side-python-runner';
-
-// setOptions({
-//   output: console.log, // Output from print(...)-functions
-//   error: null, // Throws an exception unless this is set to a function
-//   input: prompt, // How to feed the input(...)-function
-//   pythonVersion: 3, // Preferred version
-//   loadVariablesBeforeRun: true,
-//   storeVariablesAfterRun: true,
-//   onLoading: (engine, isFirst) => {},
-//   onLoaded: (engine, isLast) => {},
-// });
-
-// export const runPython = async (code: string, inputs: string[], setOutput: (output: string) => void): Promise<string> => {
-//   // await loadEngine('pyodide', { version: '0.26.1' }); // Set engine version
-//   // await runCode(`print("printed from pyodide")`);
-//   return '';
-// }
