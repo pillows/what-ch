@@ -17,11 +17,12 @@ import Hero from 'src/content/Overview/Hero';
 
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-// import { runPython } from '@/runner/python';
+import { runPython as runPythonWithInput } from '@/runner/python';
 import { useAtom, useAtomValue } from 'jotai';
 import {
   codeAtom,
   cppCompilerReadyAtom,
+  inputAtom,
   // inputAtom,
   modeAtom,
   outputAtom
@@ -65,15 +66,14 @@ export interface Language {
   value: string;
 }
 
-// const options = ['Firefox', 'Google Chrome', 'Microsoft Edge', 'Safari', 'Opera'];
 function Overview() {
   const [, setOutput] = useAtom(outputAtom);
   const code = useAtomValue(codeAtom);
   const [mode, setMode] = useAtom(modeAtom);
-  // const stdIn = useAtomValue(inputAtom);
+  const stdIn = useAtomValue(inputAtom);
   const [compilerReady, setCompilerReady] =
     useAtom(cppCompilerReadyAtom);
-  const { runPython } = usePyodide();
+  const { runPython, pyodideLoading } = usePyodide();
 
   useEffect(() => {
     setOutput('');
@@ -86,6 +86,17 @@ function Overview() {
       });
     }
   }, [mode]);
+
+  const ifInputInCode = (code: string) => {
+    const pattern = /=\s*input\s*\(/g;
+
+    // Find all matches in the code
+    const matches = code.match(pattern) || [];
+
+    // Return the results
+    return matches.length > 0;
+  };
+
   return (
     <OverviewWrapper>
       <Head>
@@ -125,12 +136,21 @@ function Overview() {
                 <Button
                   variant="contained"
                   sx={{ ml: 2 }}
+                  disabled={(mode.value === 'c_cpp' && !compilerReady) || (mode.value === 'python' && pyodideLoading)}
                   onClick={async () => {
                     console.time('execute')
-                    // const inputs = stdIn.split('\n');
+                    const inputs = stdIn.split('\n');
                     if (mode.value === 'python') {
-                      const output = await runPython(code);
-                      setOutput(output);
+                      // if (ifInputInCode(code)) {
+                      //   runPythonWithInput(code, inputs, setOutput);
+                      // } else {
+                        // const result = await runPython(code);
+                        // setOutput(result);
+                      // }
+                      // if (ifInputInCode(code)) {
+                      //   runPythonWithInput(code, inputs, setOutput);
+                      // }
+                      runPythonWithInput(code, inputs, setOutput);
                     }
                     else if (mode.value === 'c_cpp' || mode.value === 'c')
                       runCpp(code, setOutput);
@@ -142,10 +162,11 @@ function Overview() {
                       console.log('not implemented');
                       alert('Not implemented')
                     }
+                    console.timeEnd('execute');
                   }}
                 >
                   {/* { compilerReady && mode.value === "c_cpp" ? "Execute" : "Loading" } */}
-                  {mode.value === 'c_cpp' && !compilerReady
+                  {(mode.value === 'c_cpp' && !compilerReady) || (mode.value === 'python' && pyodideLoading)
                     ? 'Loading'
                     : 'Execute'}
                 </Button>
