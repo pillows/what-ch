@@ -5,14 +5,15 @@ export const runJavascript = async (
   setOutput: (output: string) => void
 ) => {
   setOutput('');
-
   const QuickJS = await getQuickJS();
   const vm = QuickJS.newContext();
-
+  const logs: string[] = [];
   const logHandle = vm.newFunction('log', (...args) => {
     const nativeArgs = args.map(vm.dump);
-    const output = nativeArgs.join(' ') + '\n';
+    const output = JSON.stringify(nativeArgs);
     setOutput(output);
+    logs.push(nativeArgs.toString());
+    setOutput(logs.join('\n'));
   });
   const consoleHandle = vm.newObject();
   vm.setProp(consoleHandle, 'log', logHandle);

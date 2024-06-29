@@ -3,7 +3,8 @@ import { loadPyodide } from 'pyodide';
 export class StdinHandler {
   results: string[] = []; // Update the type of 'results' to 'string[]' and initialize it as an empty array
   idx = 0;
-  constructor(results: string[], options: {}) { // Update the type of 'results' parameter to 'string[]'
+  constructor(results: string[], options: {}) {
+    // Update the type of 'results' parameter to 'string[]'
     this.results = results;
     this.idx = 0;
     Object.assign(this, options);

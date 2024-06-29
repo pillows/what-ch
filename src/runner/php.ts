@@ -10,7 +10,7 @@ export const runPhp = async (
     await php.run(code);
   });
 
-  php.addEventListener('output', (event?: { detail: string[]; }) => {
+  php.addEventListener('output', (event?: { detail: string[] }) => {
     if (event) {
       setOutput(event.detail[0]);
     }

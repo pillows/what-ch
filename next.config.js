@@ -9,9 +9,9 @@ const nextConfig = {
    *
    * @see https://nextjs.org/docs/app/building-your-application/deploying/static-exports
    */
-  output: "export",
+  output: 'export',
   images: {
-    unoptimized: true,
+    unoptimized: true
   },
   // distDir: "out",
 
@@ -20,7 +20,7 @@ const nextConfig = {
    *
    * @see https://nextjs.org/docs/app/api-reference/next-config-js/basePath
    */
-  basePath: "/what-ch",
+  basePath: '/what-ch',
 
   /**
    * Disable server-based image optimization. Next.js does not support
@@ -29,7 +29,7 @@ const nextConfig = {
    * @see https://nextjs.org/docs/app/api-reference/components/image#unoptimized
    */
   images: {
-    unoptimized: true,
+    unoptimized: true
   },
   webpack: (config, { isServer }) => {
     // Add the PyodidePlugin to the plugins array

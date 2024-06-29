@@ -23,13 +23,13 @@ type Props = {
 };
 
 const langObj: { [key: string]: string } = {
-  'c_cpp': 'c_cpp',
+  c_cpp: 'c_cpp',
   'c++': 'c_cpp',
-  'python': 'python',
-  'java': 'java',
-  'golang': 'golang',
-  'php': 'php',
-  'javascript': 'javascript'
+  python: 'python',
+  java: 'java',
+  golang: 'golang',
+  php: 'php',
+  javascript: 'javascript'
 };
 
 const Editor: React.FC<Props> = (props) => {

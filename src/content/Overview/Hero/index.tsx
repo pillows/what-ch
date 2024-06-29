@@ -11,7 +11,7 @@ function Hero() {
   return (
     <Container maxWidth="lg" sx={{ textAlign: 'center' }}>
       <Grid
-      sx={{ mt: 8 }}
+        sx={{ mt: 8 }}
         // spacing={{ xs: 6, md: 10 }}
         justifyContent="center"
         alignItems="center"

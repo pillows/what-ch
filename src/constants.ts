@@ -6,7 +6,8 @@ int main()
     return 0;
 }`;
 
-export const javascript_code = `console.log("Hello, World!");`;
+export const javascript_code = `console.log("Hello, World!");
+console.log("Multi line test!");`;
 
 export const php_code = `<?php echo "Hello, World!"; ?>`;
 
@@ -17,16 +18,16 @@ print (str(currentDT))
 # My python code here
 print("Hello from Python!")
 test = input();
-#print('test', test)
+print('test input', test)
 `;
 
 export const codeTemplates = {
   'c++': cpp_code,
-  'c_cpp': cpp_code,
-  'javascript': javascript_code,
-  'php': php_code,
-  'python': python_code,
-  'golang': ''
+  c_cpp: cpp_code,
+  javascript: javascript_code,
+  php: php_code,
+  python: python_code,
+  golang: ''
 };
 
 export const unavailable = ['golang'];

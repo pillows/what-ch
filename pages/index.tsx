@@ -4,7 +4,7 @@ import {
   Card,
   Container,
   Button,
-  styled,
+  styled
 } from '@mui/material';
 import type { ReactElement } from 'react';
 import BaseLayout from 'src/layouts/BaseLayout';
@@ -19,12 +19,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 // import { runPython } from '@/runner/python';
 import { useAtom, useAtomValue } from 'jotai';
-import {
-  codeAtom,
-  cppCompilerReadyAtom,
-  modeAtom,
-  outputAtom
-} from '@/store';
+import { codeAtom, cppCompilerReadyAtom, modeAtom, outputAtom } from '@/store';
 import React, { useEffect } from 'react';
 import { runCpp } from '@/runner/cpp';
 import { appendScript } from '@/utils';
@@ -68,9 +63,8 @@ function Overview() {
   const [, setOutput] = useAtom(outputAtom);
   const code = useAtomValue(codeAtom);
   const [mode, setMode] = useAtom(modeAtom);
-  const [compilerReady, setCompilerReady] =
-    useAtom(cppCompilerReadyAtom);
-  const { runPython } = usePyodide();
+  const [compilerReady, setCompilerReady] = useAtom(cppCompilerReadyAtom);
+  const { runPython, pyodideLoading } = usePyodide();
 
   useEffect(() => {
     setOutput('');
@@ -124,24 +118,23 @@ function Overview() {
                   variant="contained"
                   sx={{ ml: 2 }}
                   onClick={async () => {
-                    console.time('execute')
+                    console.time('execute');
                     if (mode.value === 'python') {
                       const output = await runPython(code);
                       setOutput(output);
-                    }
-                    else if (mode.value === 'c_cpp' || mode.value === 'c')
+                    } else if (mode.value === 'c_cpp' || mode.value === 'c')
                       runCpp(code, setOutput);
-                    else if (mode.value === 'php')
-                      runPhp(code, setOutput);
+                    else if (mode.value === 'php') runPhp(code, setOutput);
                     else if (mode.value === 'javascript')
                       runJavascript(code, setOutput);
                     else {
                       console.log('not implemented');
-                      alert('Not implemented')
+                      alert('Not implemented');
                     }
                   }}
                 >
-                  {mode.value === 'c_cpp' && !compilerReady
+                  {(mode.value === 'c_cpp' && !compilerReady) ||
+                  (mode.value === 'python' && pyodideLoading)
                     ? 'Loading'
                     : 'Execute'}
                 </Button>

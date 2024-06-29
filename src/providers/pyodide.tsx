@@ -1,88 +1,92 @@
-
-
-
-import { useState, useEffect, createContext, useContext, PropsWithChildren } from "react";
-import Script from "next/script";
-import { createPythonClient } from "@run-wasm/python"
+import {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  PropsWithChildren
+} from 'react';
+import Script from 'next/script';
+import { createPythonClient } from '@run-wasm/python';
 
 export class StdinHandler {
-    results: string[] = []; // Update the type of 'results' to 'string[]' and initialize it as an empty array
-    idx = 0;
-    constructor(results: string[], options: {}) { // Update the type of 'results' parameter to 'string[]'
-      this.results = results;
-      this.idx = 0;
-      Object.assign(this, options);
-    }
-  
-    stdin() {
-      return this.results[this.idx++];
-    }
+  results: string[] = []; // Update the type of 'results' to 'string[]' and initialize it as an empty array
+  idx = 0;
+  constructor(results: string[], options: {}) {
+    // Update the type of 'results' parameter to 'string[]'
+    this.results = results;
+    this.idx = 0;
+    Object.assign(this, options);
   }
-  declare module '@run-wasm/python';
+
+  stdin() {
+    return this.results[this.idx++];
+  }
+}
+declare module '@run-wasm/python';
 
 declare global {
   // <- [reference](https://stackoverflow.com/a/56458070/11542903)
   interface Window {
-    loadPyodide: Function
+    loadPyodide: Function;
   }
 }
 
 export interface Pyodide {
-  runPython: (code: string) => unknown
+  runPython: (code: string) => unknown;
 }
 
 type Value = {
-  runPython: (code: string) => Promise<string>,
-  pyodideLoading: boolean,
-  plotElementId: string,
-}
+  runPython: (code: string) => Promise<string>;
+  pyodideLoading: boolean;
+  plotElementId: string;
+};
 
-const PyodideContext = createContext<Value | undefined>(undefined)
+const PyodideContext = createContext<Value | undefined>(undefined);
 
 export default function PyodideProvider({ children }: PropsWithChildren<{}>) {
-  const [pyodide, setPyodide] = useState<Pyodide | undefined>(undefined)
+  const [pyodide, setPyodide] = useState<Pyodide | undefined>(undefined);
   const loading = !pyodide;
 
   // Note that window.loadPyodide comes from the beforeInteractive pyodide.js Script
   useEffect(() => {
     if (pyodide) {
-      return
+      return;
     }
 
     const loadAndSetPyodide = async () => {
       const loadedPyodide = await window.loadPyodide({
-        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.18.1/full/',
+        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.18.1/full/'
       });
-    //   await preloadMatplotlib(loadedPyodide);
+      //   await preloadMatplotlib(loadedPyodide);
       await importDateUtil(loadedPyodide);
       setPyodide(loadedPyodide);
-    }
+    };
 
     loadAndSetPyodide();
-  }, [pyodide])
+  }, [pyodide]);
 
   const runPython = async (code: string): Promise<string> => {
-    const pythonClient = createPythonClient(pyodide)
-    const output = await pythonClient.run({ code })
-    return output
-  }
+    const pythonClient = createPythonClient(pyodide);
+    const output = await pythonClient.run({ code });
+    return output;
+  };
 
-  const plotElementId = 'data-playground__plot'
+  const plotElementId = 'data-playground__plot';
 
-//   async function preloadMatplotlib(pyodide: Pyodide) {
-//     const pythonClient = createPythonClient(pyodide)
-//     await pythonClient.run({ code: preloadMatplotlibCode(plotElementId) })
-//   }
+  //   async function preloadMatplotlib(pyodide: Pyodide) {
+  //     const pythonClient = createPythonClient(pyodide)
+  //     await pythonClient.run({ code: preloadMatplotlibCode(plotElementId) })
+  //   }
 
   async function importDateUtil(pyodide: Pyodide) {
-    const pythonClient = createPythonClient(pyodide)
-    await pythonClient.run({ code: 'import dateutil' })
+    const pythonClient = createPythonClient(pyodide);
+    await pythonClient.run({ code: 'import dateutil' });
   }
   const value: Value = {
     runPython,
     pyodideLoading: loading,
     plotElementId
-  }
+  };
 
   return (
     <>
@@ -96,13 +100,13 @@ export default function PyodideProvider({ children }: PropsWithChildren<{}>) {
         {children}
       </PyodideContext.Provider>
     </>
-  )
+  );
 }
 
 export const usePyodide = () => {
-  const context = useContext(PyodideContext)
+  const context = useContext(PyodideContext);
   if (context === undefined) {
-    throw new Error("usePyodide must be used within a PyodideProvider")
+    throw new Error('usePyodide must be used within a PyodideProvider');
   }
-  return context
-}
+  return context;
+};

@@ -40,10 +40,7 @@ function Logo() {
   const theme = useTheme();
 
   return (
-    <TooltipWrapper
-      title="wasm.ch"
-      arrow
-    >
+    <TooltipWrapper title="wasm.ch" arrow>
       <LogoWrapper href="/" sx={{ width: 150, fontSize: 20 }}>
         <Badge
           sx={{

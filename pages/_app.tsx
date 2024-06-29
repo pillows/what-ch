@@ -1,5 +1,5 @@
-'use client'
-import type {ReactElement, ReactNode } from 'react';
+'use client';
+import type { ReactElement, ReactNode } from 'react';
 
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
@@ -14,7 +14,7 @@ import createEmotionCache from 'src/createEmotionCache';
 import { SidebarProvider } from 'src/contexts/SidebarContext';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { Provider } from 'jotai'
+import { Provider } from 'jotai';
 import PyodideProvider from '@/providers/pyodide';
 const clientSideEmotionCache = createEmotionCache();
 
@@ -28,12 +28,8 @@ interface TokyoAppProps extends AppProps {
 }
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <Provider>
-      {children}
-    </Provider>
-  )
-}
+  return <Provider>{children}</Provider>;
+};
 
 function TokyoApp(props: TokyoAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
@@ -60,7 +56,7 @@ function TokyoApp(props: TokyoAppProps) {
                 <CssBaseline />
                 {getLayout(<Component {...pageProps} />)}
               </LocalizationProvider>
-              </PyodideProvider>
+            </PyodideProvider>
           </Providers>
         </ThemeProvider>
       </SidebarProvider>
