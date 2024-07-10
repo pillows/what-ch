@@ -17,8 +17,6 @@ currentDT = datetime.datetime.now()
 print (str(currentDT))
 # My python code here
 print("Hello from Python!")
-test = input();
-print('test input', test)
 `;
 
 export const codeTemplates = {
