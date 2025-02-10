@@ -152,8 +152,9 @@ function Overview() {
             target="_blank"
             rel="noopener noreferrer"
             >
-            Cordinal © 2025
+            Cordinal
             </Link>
+            © 2025
         </Typography>
       </Container>
     </OverviewWrapper>
