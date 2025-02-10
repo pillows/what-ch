@@ -23,7 +23,7 @@ export const runJavascript = async (
 
   try {
     saferFasterEval(code);
-  } catch (error) {
+  } catch (error: any) {
     customLog(error.toString());
   }
 
