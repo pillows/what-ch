@@ -147,13 +147,13 @@ function Overview() {
       <Container maxWidth="lg" sx={{ mt: 8 }}>
         <Typography textAlign="center" variant="subtitle1">
           Made with ❤️ in NYC{' '}
-          <Link
-            href="https://mwong.io"
+            <Link
+            href="https://cordinal.io"
             target="_blank"
             rel="noopener noreferrer"
-          >
-            mwong.io
-          </Link>
+            >
+            Cordinal © 2025
+            </Link>
         </Typography>
       </Container>
     </OverviewWrapper>
