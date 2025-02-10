@@ -81,7 +81,7 @@ function Overview() {
   return (
     <OverviewWrapper>
       <Head>
-        <title>RunWASM</title>
+        <title>Wasm.ch</title>
       </Head>
       <HeaderWrapper>
         <Container maxWidth="lg">
